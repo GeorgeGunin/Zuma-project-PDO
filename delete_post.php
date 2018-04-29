@@ -10,10 +10,9 @@ if(!isValidUser()){
 if(isset($_GET['p_id'])){
 $p_id = filter_input(INPUT_GET,'p_id', FILTER_SANITIZE_STRING);
 $p_id = trim($p_id);
-echo $p_id;
+
 if(isset($_POST['submit'])){
-  
- 
+  echo $p_id;
 }
 }
 ?>
