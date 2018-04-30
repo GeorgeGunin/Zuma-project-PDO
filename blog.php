@@ -6,14 +6,9 @@ if (!isValidUser()) {
   header('location:signin.php');
   exit;
 }
-$pageTitle = 'Home Page';
+$pageTitle = 'Blog Page';
 
-spl_autoload_register(function($filename) {
-  $file = "app/$filename.php";
-  if (file_exists($file)) {
-    require_once $file;
-  }
-});
+
 $posts = Database::connect('fakebook')->getPosts();
 ?>
 
@@ -34,7 +29,7 @@ $posts = Database::connect('fakebook')->getPosts();
               <p>posted by<b> <?= htmlentities($post['name']) ?></b>| Time: <?= $post['date'] ?></p>
             </div>
             <div class="link">
-              <a href='delete_post.php?p_id=<?=$post['id']?>'>Delete Post</a> | <a href="edit_post.php?p_id=<?=$post['id']?>">Edit Post</a>
+              <a href='delete_post.php?p_id=<?=$post['id']?>&u_id=<?=$post['user_id']?>'>Delete Post</a> | <a href="edit_post.php?p_id=<?=$post['id']?>&u_id=<?=$post['user_id']?>">Edit Post</a>
             </div>
           </div>
         </div>

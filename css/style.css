@@ -79,3 +79,12 @@ footer{
 .link a:hover{
   color: #0055ff;
 }
+.ms-box{
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  background: lightseagreen;
+  display: none;
+}
