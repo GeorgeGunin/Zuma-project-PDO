@@ -1,4 +1,3 @@
-
 $(function(){
   $('.ms-box').slideToggle("slow");
   setTimeout(function(){
