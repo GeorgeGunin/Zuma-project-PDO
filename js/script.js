@@ -1,5 +1,5 @@
 
-$(document).ready(function(){
+$(function(){
   $('.ms-box').slideToggle("slow");
   setTimeout(function(){
     $('.ms-box').slideToggle("slow");
