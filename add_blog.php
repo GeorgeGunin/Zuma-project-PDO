@@ -8,12 +8,7 @@ if (!isValidUser()) {
 }
 $pageTitle = 'Add Post';
 $error='';
-spl_autoload_register(function($filename){
-   $file ="app/$filename.php";
-   if(file_exists($file)){
-     require_once $file;
-   }
- });
+
 $posts = Database::connect('fakebook')->getPosts();
 
 if(isset($_POST['submit'])){
@@ -22,13 +17,13 @@ if(isset($_POST['submit'])){
   $article = trim($article);
   $title = trim($title);
   echo $article.' '.$title;
-  
-  if(!$article){
-    $error = '*Article is required';
-  }
-  if (!$title) {
+   if (!$title) {
   $error = '*Title is required';
 }
+  elseif(!$article){
+    $error = '*Article is required';
+  }
+ 
 else{
   Database::setPost($_SESSION['user_id'],$title,$article);
 }
