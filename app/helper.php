@@ -1,5 +1,20 @@
 <?php
 
+$ms = [
+    1 => 'Welcome back',
+    2 => 'Congratulations you  signed up, enjoy !!!',
+    3 => 'New Post is up',
+    4 => 'Your post is updated',
+    5 => 'Post is deleted'
+];
+
+spl_autoload_register(function($filename) {
+  $file = "app/$filename.php";
+  if (file_exists($file)) {
+    require_once $file;
+  }
+});
+
 if (!function_exists('old')) {
 
   function old($field) {
