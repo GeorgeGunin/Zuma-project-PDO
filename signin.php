@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
     if (!$password || strlen($password) < 5 || strlen($password) > 10) {
       $error['password'] = '*Password is required and must be 6-10 charachters';
     } else {
-      $passed = Database::connect('fakebook')->checkUser($email, $password);
+      $passed = $DB->checkUser($email, $password);
 
       if ($passed) {
         header('location:blog.php?ms=1');

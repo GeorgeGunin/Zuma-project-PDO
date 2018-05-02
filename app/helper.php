@@ -1,5 +1,6 @@
 <?php
 
+
 $ms = [
     1 => 'Welcome back',
     2 => 'Congratulations you  signed up, enjoy !!!',
@@ -14,6 +15,8 @@ spl_autoload_register(function($filename) {
     require_once $file;
   }
 });
+
+$DB = Database::getConnected('fakebook');
 
 if (!function_exists('old')) {
 

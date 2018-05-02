@@ -6,21 +6,28 @@ class Database {
   const MYSQL_CHARSET = 'utf8';
   const MYSQL_ADMIN = 'root';
 
-  private static $db;
+  private  $_db;
+  
+  static private $_connected;
 
-  public static function connect($name) {
-
-    $dbcon = "mysql:localhost=" . self::MYSQL_HOST . ';' . "dbname=" . $name . ';' . "charset=" . self::MYSQL_CHARSET;
-    $db = new PDO($dbcon, self::MYSQL_ADMIN, '');
-    self::$db = $db;
-
-    return new self();
+  private  function __construct($database) {
+    
+    $dbcon = "mysql:localhost=" . self::MYSQL_HOST . ';' . "dbname=" . $database . ';' . "charset=" . self::MYSQL_CHARSET;
+    $this->_db = new PDO($dbcon, self::MYSQL_ADMIN, '');
+    
+  }
+  
+  public static  function getConnected($database){
+    if(is_null(self::$_connected)){
+      self::$_connected = new self($database);
+    }
+    return self::$_connected;
   }
 
-  public static function checkUser($email, $password) {
+  public  function checkUser($email, $password) {
 
     $sql = "SELECT * FROM users WHERE email = ? LIMIT 1";
-    $query = self::$db->prepare($sql);
+    $query = $this->_db->prepare($sql);
     $query->execute([$email]);
     $user = $query->fetch(PDO::FETCH_ASSOC);
     if ($user) {
@@ -35,17 +42,17 @@ class Database {
     }
   }
 
-  public static function getPosts() {
+  public function getPosts() {
     $sql = "SELECT p.*,u.name FROM posts p  JOIN  users u on u.id = p.user_id ORDER BY date DESC";
 
-    $posts = self::$db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    $posts = $this->_db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     return $posts;
   }
 
-  public static function getPost($p_id, $u_id) {
+  public  function getPost($p_id, $u_id) {
 
     $sql = "SELECT title,article FROM posts  WHERE id=? AND user_id=?";
-    $query = self::$db->prepare($sql);
+    $query = $this->_db->prepare($sql);
     $res = $query->execute([$p_id, $u_id]);
     if ($res) {
       $post = $query->fetch();
@@ -55,29 +62,29 @@ class Database {
     return false;
   }
 
-  public static function setPost( $user_id, $title, $article) {
+  public  function setPost( $user_id, $title, $article) {
     
     
     $sql = "INSERT INTO posts VALUES('',?,?,?,NOW())";
-    $query = self::$db->prepare($sql);
+    $query = $this->_db->prepare($sql);
     
     $res = $query->execute([$user_id, $title, $article]);
     return $res;
     
   }
   
-  public static function editPost($p_id, $user_id, $title, $article) {
+  public  function editPost($p_id, $user_id, $title, $article) {
     
     $sql = "UPDATE posts  set title=?, article=?, date=NOW() WHERE user_id = ? AND id = ?";
-    $query = self::$db->prepare($sql);
+    $query = $this->_db->prepare($sql);
     
     $res = $query->execute([$title,$article, $user_id, $p_id]);
     return $res;
     }
 
-  public static function deletePost($post_id, $user_id) {
+  public  function deletePost($post_id, $user_id) {
     $sql = "DELETE FROM posts WHERE id = ? AND user_id = ?";
-    $query = self::$db->prepare($sql);
+    $query = $this->_db->prepare($sql);
     $res = $query->execute([$post_id, $user_id]);
     if ($res) {
       return true;
@@ -85,13 +92,13 @@ class Database {
     return false;
   }
 
-  public static function addUser($name, $email, $password) {
+  public function addUser($name, $email, $password) {
     $password = password_hash($password, PASSWORD_BCRYPT);
     $sql = "INSERT INTO users VALUES('',?,?,?)";
-    $query = self::$db->prepare($sql);
+    $query = $this->_db->prepare($sql);
     $res = $query->execute([$name, $email, $password]);
     if ($res) {
-      $_SESSION['user_id'] = self::$db->lastInsertID();
+      $_SESSION['user_id'] = $this->_db->lastInsertID();
       $_SESSION['user_name'] = $name;
       $_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
       $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];

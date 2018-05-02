@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
       $ok=false;
     }
     else if($ok){
-      $create = Database::connect('fakebook')->addUser($name,$email, $password);
+      $create = $DB->addUser($name,$email, $password);
 
       if ($create) {
         header('location:blog.php?ms=2');

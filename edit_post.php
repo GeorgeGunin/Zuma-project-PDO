@@ -16,7 +16,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id']) && $_GET['u_id'] == $_SESSION['
   
   if (is_numeric($p_id) && is_numeric($u_id) && $u_id == $_SESSION['user_id']) {
     if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $u_id) {
-      $res = Database::connect('fakebook')->getPost($p_id, $u_id);
+      $res = $DB->getPost($p_id, $u_id);
     }
         if(isset($_POST['submit'])){
           $title = filter_input(INPUT_POST,'title', FILTER_SANITIZE_STRING);
@@ -31,7 +31,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id']) && $_GET['u_id'] == $_SESSION['
             $error = '*Article is required';
           }
           else{
-          $result = Database::connect('fakebook')->editPost($p_id, $u_id, $title, $article);
+          $result = $DB->editPost($p_id, $u_id, $title, $article);
           
           if($result){
             header('location:blog.php?ms=4');

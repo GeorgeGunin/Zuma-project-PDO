@@ -9,7 +9,7 @@ if (!isValidUser()) {
 $pageTitle = 'Blog Page';
 
 
-$posts = Database::connect('fakebook')->getPosts();
+$posts = $DB->getPosts();
 ?>
 
 <?php include_once 'templates/header.php'; ?>

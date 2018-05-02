@@ -17,7 +17,7 @@ $u_id = trim($u_id);
 if(isset($_POST['submit'])){
 if(is_numeric($p_id) && is_numeric($u_id)){
   if(isset($_SESSION['user_id']) && $_SESSION['user_id']==$u_id ){
-  $res=Database::connect('fakebook')->deletePost($p_id,$u_id);
+  $res=$DB->deletePost($p_id,$u_id);
   if($res){
     header('location:blog.php?ms=5');
     exit;

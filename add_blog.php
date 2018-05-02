@@ -9,7 +9,7 @@ if (!isValidUser()) {
 $pageTitle = 'Add Post';
 $error='';
 
-$posts = Database::connect('fakebook')->getPosts();
+
 
 if(isset($_POST['submit'])){
   $article = filter_input(INPUT_POST,'article',FILTER_SANITIZE_STRING);
@@ -25,7 +25,7 @@ if(isset($_POST['submit'])){
   }
  
 else{
- $res = Database::setPost($_SESSION['user_id'],$title,$article);
+ $res = $DB->setPost($_SESSION['user_id'],$title,$article);
  if($res){
    header('location:blog.php?ms=3');
  }
