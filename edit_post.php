@@ -5,7 +5,7 @@ if (!isValidUser()) {
   header('location:signin.php');
   exit;
 }
-
+$pageTitle = 'Edit post';
 $error='';
 
 if (isset($_GET['p_id']) && isset($_GET['u_id']) && $_GET['u_id'] == $_SESSION['user_id']) {

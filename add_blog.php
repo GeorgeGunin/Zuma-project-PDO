@@ -16,7 +16,7 @@ if(isset($_POST['submit'])){
   $title = filter_input(INPUT_POST,'title',FILTER_SANITIZE_STRING);
   $article = trim($article);
   $title = trim($title);
-  echo $article.' '.$title;
+ 
    if (!$title) {
   $error = '*Title is required';
 }
@@ -25,7 +25,10 @@ if(isset($_POST['submit'])){
   }
  
 else{
-  Database::setPost($_SESSION['user_id'],$title,$article);
+ $res = Database::setPost($_SESSION['user_id'],$title,$article);
+ if($res){
+   header('location:blog.php?ms=3');
+ }
 }
 }
 

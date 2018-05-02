@@ -41,30 +41,39 @@ class Database {
     $posts = self::$db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     return $posts;
   }
-  
-  public static function getPost($p_id,$u_id){
-    
+
+  public static function getPost($p_id, $u_id) {
+
     $sql = "SELECT title,article FROM posts  WHERE id=? AND user_id=?";
     $query = self::$db->prepare($sql);
-    $res = $query->execute([$p_id,$u_id]);
-    if($res){
-      $post = $query->fetchAll(PDO::FETCH_ASSOC);
-      echo '<pre>';
-      print_r($post);
-      echo '</pre>';
+    $res = $query->execute([$p_id, $u_id]);
+    if ($res) {
+      $post = $query->fetch();
+
       return $post;
     }
     return false;
   }
 
-  public static function setPost($user_id, $title, $article) {
+  public static function setPost( $user_id, $title, $article) {
+    
+    
     $sql = "INSERT INTO posts VALUES('',?,?,?,NOW())";
     $query = self::$db->prepare($sql);
+    
     $res = $query->execute([$user_id, $title, $article]);
-    if ($res) {
-      header('location:blog.php');
-    }
+    return $res;
+    
   }
+  
+  public static function editPost($p_id, $user_id, $title, $article) {
+    
+    $sql = "UPDATE posts  set title=?, article=?, date=NOW() WHERE user_id = ? AND id = ?";
+    $query = self::$db->prepare($sql);
+    
+    $res = $query->execute([$title,$article, $user_id, $p_id]);
+    return $res;
+    }
 
   public static function deletePost($post_id, $user_id) {
     $sql = "DELETE FROM posts WHERE id = ? AND user_id = ?";
@@ -77,17 +86,18 @@ class Database {
   }
 
   public static function addUser($name, $email, $password) {
-    $password = password_hash($password,PASSWORD_BCRYPT);
-    $sql = "INSERT INTO users VALUES('',?,?,?)" ;
+    $password = password_hash($password, PASSWORD_BCRYPT);
+    $sql = "INSERT INTO users VALUES('',?,?,?)";
     $query = self::$db->prepare($sql);
-    $res = $query->execute([$name,$email,$password]);
-    if($res){
-    $_SESSION['user_id'] = self::$db->lastInsertID();
-    $_SESSION['user_name'] = $name;
-    $_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
-    $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-    return true;
+    $res = $query->execute([$name, $email, $password]);
+    if ($res) {
+      $_SESSION['user_id'] = self::$db->lastInsertID();
+      $_SESSION['user_name'] = $name;
+      $_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
+      $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+      return true;
+    }
+    return false;
   }
-  return false;
-  }
+
 }

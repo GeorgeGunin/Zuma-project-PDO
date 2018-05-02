@@ -3,7 +3,7 @@
 $ms = [
     1 => 'Welcome back',
     2 => 'Congratulations you  signed up, enjoy !!!',
-    3 => 'New Post is up',
+    3 => 'New Post is added',
     4 => 'Your post is updated',
     5 => 'Post is deleted'
 ];
