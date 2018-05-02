@@ -6,7 +6,7 @@ if(!isValidUser()){
   header('location:signin.php'); 
   exit;
 }
-
+$pageTitle = 'Delete post';
 
 if(isset($_GET['p_id']) && isset($_GET['u_id'])){
 $p_id = filter_input(INPUT_GET,'p_id', FILTER_SANITIZE_STRING);
