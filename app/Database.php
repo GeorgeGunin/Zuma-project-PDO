@@ -2,7 +2,7 @@
 
 class Database {
 
-  const MYSQL_HOST = 'localhost';
+  const MYSQL_HOST = 'sql202.000space.com';
   const MYSQL_CHARSET = 'utf8';
   const MYSQL_ADMIN = 'root';
 
