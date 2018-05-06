@@ -4,16 +4,17 @@ class Database {
 
   const MYSQL_HOST = 'sql202.000space.com';
   const MYSQL_CHARSET = 'utf8';
-  const MYSQL_ADMIN = 'root';
+  const MYSQL_ADMIN ='space_22040363';
 
   private  $_db;
   
   static private $_connected;
+  
 
-  private  function __construct($database) {
-    
-    $dbcon = "mysql:localhost=" . self::MYSQL_HOST . ';' . "dbname=" . $database . ';' . "charset=" . self::MYSQL_CHARSET;
-    $this->_db = new PDO($dbcon, self::MYSQL_ADMIN, '');
+  private  function __construct($database) { 
+    echo $this->MYSQL_HOST;
+    $dbcon = "mysql:host=" . self::MYSQL_HOST. ';' . "dbname=" . $database . ';' . "charset=" . self::MYSQL_CHARSET;
+    $this->_db = new PDO($dbcon, self::MYSQL_ADMIN, 'masm8086');
     
   }
   
