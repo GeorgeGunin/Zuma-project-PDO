@@ -16,7 +16,7 @@ spl_autoload_register(function($filename) {
   }
 });
 
-$DB = Database::getConnected('fakebook');
+$DB = Database::getConnected('space_22040363_fakebook');
 
 if (!function_exists('old')) {
 
